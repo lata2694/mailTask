@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mail</title>
+</head>
+
+<body>
+    <div id="app">
+        <form>
+            <input type="text" placeholder="Enter email..." id="email"/>
+            <button id="request" type="button" onclick="requestEJS(this)">Request EJS</button>
+        </form>
+    </div>
+</body>
+<script>
+    function requestEJS(id) {
+        var input = document.getElementById("email").value;
+        fetch("http://localhost:9000/api/form_emails", {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({email: input}),
+        })
+            .then(response => {
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById("app").innerHTML = data;
+                console.log("fetch returns data", data);
+            })
+            .catch(err => {
+                console.log("fetch returns err", err);
+            });
+    }
+</script>
+
+</html>
